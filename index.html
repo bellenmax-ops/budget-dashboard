@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F0E6F6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌷</text></svg>">
+<title>Belle's Money Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',system-ui,sans-serif;background:linear-gradient(180deg,#F0E6F6 0%,#FFF8F5 30%,#E4F0DE 100%);color:#4A3F5C;min-height:100vh}
+.app{max-width:520px;margin:0 auto;padding:20px 16px 40px}
+.header{text-align:center;padding:20px 0 24px}
+.header .flower{font-size:36px;margin-bottom:4px}
+.header h1{font-size:26px;font-weight:800;background:linear-gradient(135deg,#9B7BBF,#D4919A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;letter-spacing:-0.03em}
+.header p{color:#7B6F8E;font-size:13px}
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:#fff;border-radius:16px;padding:4px;box-shadow:0 1px 6px rgba(155,123,191,0.06)}
+.tab{flex:1;border:none;border-radius:12px;padding:10px 2px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#A99BBF;transition:all 0.2s}
+.tab.active{background:#F0E6F6;color:#9B7BBF;font-weight:700}
+.tab .icon{font-size:15px;display:block;margin-bottom:2px}
+.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(155,123,191,0.08);border:1.5px solid #F0E6F6;margin-bottom:16px}
+.stitle{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.stitle .si{font-size:22px}
+.stitle h2{margin:0;font-size:18px;font-weight:700;letter-spacing:-0.02em}
+.pbar{background:#F0EAF5;border-radius:10px;height:14px;overflow:hidden;position:relative;margin-bottom:4px}
+.pbar .fill{height:100%;border-radius:10px;transition:width 0.6s ease;min-width:20px}
+.pbar .pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700}
+.bitem{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bicon{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.binfo{flex:1}
+.brow{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px}
+.brow .label{font-weight:600}
+.brow .amt{font-weight:700}
+.minibar{background:#F0EAF5;border-radius:4px;height:6px;overflow:hidden}
+.minibar .fill{height:100%;border-radius:4px;transition:width 0.4s}
+.alert-card{background:#FBE8EA;border-color:#F0C4C8}
+.alert-card .title{font-weight:700;font-size:14px;color:#D4919A}
+.alert-card .sub{font-size:12px;color:#7B6F8E;line-height:1.5;margin-top:4px}
+.goal-card{margin-bottom:16px}
+.goal-card .gicon{font-size:28px;margin-bottom:4px}
+.goal-card h3{font-size:16px;font-weight:700;margin:0}
+.goal-card .gsub{font-size:12px;color:#7B6F8E;margin:2px 0 12px}
+.goal-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px}
+.btn{border:none;border-radius:10px;padding:6px 14px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px}
+.ms-btn{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-radius:14px;border:1.5px solid #F0EAF5;cursor:pointer;text-align:left;font-family:inherit;width:100%;margin-bottom:10px;transition:all 0.2s}
+.ms-btn.done{background:#E4F0DE;border-color:#C2D9B8;opacity:0.7}
+.ms-check{width:24px;height:24px;border-radius:8px;border:2px solid #D8C4E8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ms-btn.done .ms-check{background:#7BAF73;border-color:#7BAF73}
+.ms-label{font-size:14px;font-weight:600}
+.ms-btn.done .ms-label{text-decoration:line-through;color:#A99BBF}
+.ms-when{font-size:12px;color:#A99BBF;margin-top:2px}
+.contact-row{display:flex;align-items:flex-start;gap:12px}
+.contact-row .ci{font-size:24px;flex-shrink:0}
+.contact-row .cn{font-weight:700;font-size:15px}
+.contact-row .cd{font-size:14px;font-weight:600;color:#9B7BBF;margin-top:2px}
+.contact-row .cnote{font-size:12px;color:#7B6F8E;margin-top:2px}
+.field-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F0EAF5}
+.field-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.field-label{font-size:11px;color:#A99BBF;font-weight:600;margin-bottom:2px}
+.field-val{font-size:16px;font-weight:700}
+.edit-btn{background:none;border:none;cursor:pointer;color:#A99BBF;padding:2px;font-size:13px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.stat-box{border-radius:12px;padding:12px;text-align:center}
+.stat-label{font-size:11px;color:#7B6F8E;margin-bottom:4px}
+.stat-num{font-size:22px;font-weight:800}
+.stat-sm{font-size:14px;font-weight:800}
+.whatif{background:#E4F0DE;border-color:#C2D9B8;display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.6}
+.pay-entry{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#F0E6F6;border-radius:10px;margin-bottom:6px}
+.pay-amt{font-size:13px;font-weight:700;color:#9B7BBF}
+.pay-detail{font-size:11px;color:#A99BBF}
+.pay-del{background:none;border:none;cursor:pointer;color:#A99BBF;padding:4px}
+.add-form{background:#F0E6F6;border-radius:14px;padding:16px;margin-bottom:12px}
+.add-form label{font-size:11px;color:#7B6F8E;font-weight:600;display:block;margin-bottom:4px}
+.add-form input{display:block;width:100%;padding:6px 8px;border-radius:8px;border:1.5px solid #D8C4E8;font-size:13px;font-family:inherit;color:#4A3F5C;outline:none;margin-bottom:8px;box-sizing:border-box}
+.add-form .form-btns{display:flex;gap:8px;margin-top:4px}
+.add-form .save-btn{flex:1;background:#9B7BBF;color:#fff;border:none;border-radius:10px;padding:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer}
+.add-form .cancel-btn{background:#eee;color:#7B6F8E;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-family:inherit;cursor:pointer}
+.amort-grid{font-size:12px}
+.amort-header{display:grid;grid-template-columns:0.6fr 1fr 1fr 1fr;gap:4px;padding:6px 0;border-bottom:2px solid #F0C4C8;font-weight:700;color:#D4919A}
+.amort-row{display:grid;grid-template-columns:0.6fr 1fr 1fr 1fr;gap:4px;padding:6px 0;border-bottom:1px solid #F0EAF5}
+.footer{text-align:center;margin-top:32px;padding:16px 0;font-size:12px;color:#A99BBF}
+.hidden{display:none}
+.link-btn{border:none;background:none;color:#9B7BBF;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;padding:0;display:flex;align-items:center;gap:4px;margin-top:8px}
+.edit-input{width:80px;padding:6px 8px;border-radius:10px;border:1.5px solid #D8C4E8;font-size:14px;font-family:inherit;font-weight:600;color:#4A3F5C;outline:none}
+.hint{font-size:13px;color:#7B6F8E;line-height:1.6;text-align:center;margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const h = t => {const d=document.createElement('div');d.innerHTML=t;return d.firstElementChild||d};
+
+const LS = {
+  get(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch{return fb}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+};
+
+let state = {
+  tab: 'overview',
+  goals: LS.get('belle-goals',{roth:0,summer:0,emergency:0}),
+  milestones: LS.get('belle-milestones',{}),
+  car: LS.get('belle-car',{vehicle:'2022 Mitsubishi Mirage G4',balance:11227.40,rate:12.44,payment:507.38,maturity:'08/15/2028',originalBalance:11227.40,extraPayments:[]}),
+  editing: null,
+  showAddPay: false
+};
+
+function calcLoan(bal,apr,pmt){
+  const r=apr/100/12;if(r===0||pmt<=0)return{months:0,totalInterest:0,schedule:[]};
+  let b=bal,ti=0,m=0,sched=[];
+  while(b>0.01&&m<360){const int=b*r;const pr=Math.min(pmt-int,b);if(pr<=0)break;b-=pr;ti+=int;m++;sched.push({month:m,principal:Math.round(pr*100)/100,interest:Math.round(int*100)/100,balance:Math.round(Math.max(b,0)*100)/100})}
+  return{months:m,totalInterest:Math.round(ti*100)/100,schedule:sched};
+}
+
+function pbar(val,max,c1,c2,ht=14){
+  const pct=Math.min(Math.max(val/max*100,0),100);
+  return`<div class="pbar" style="height:${ht}px"><div class="fill" style="width:${pct}%;background:linear-gradient(90deg,${c1},${c2})"></div><span class="pct" style="color:${pct>60?'#fff':'#4A3F5C'}">${Math.round(pct)}%</span></div>`;
+}
+
+const budget=[
+  {label:'Rent',amt:700,icon:'🏠',color:'#D8C4E8'},
+  {label:'Car',amt:507,icon:'🚗',color:'#F0C4C8'},
+  {label:'Spending',amt:1250,icon:'💳',color:'#C2D9B8'},
+  {label:'Roth IRA',amt:625,icon:'📈',color:'#9B7BBF'},
+  {label:'Summer Fund',amt:617,icon:'☀️',color:'#D4919A'},
+  {label:'Advance',amt:150,icon:'🏛️',color:'#A99BBF'},
+  {label:'Cushion',amt:751,icon:'🛡️',color:'#7BAF73'}
+];
+
+const goals=[
+  {key:'roth',label:'Roth IRA',icon:'💜',target:7500,monthly:625,c:'#D8C4E8',cd:'#9B7BBF'},
+  {key:'summer',label:'Summer Fund',icon:'🌸',target:6164,monthly:617,c:'#F0C4C8',cd:'#D4919A'},
+  {key:'emergency',label:'Emergency Fund',icon:'🌿',target:4000,monthly:0,c:'#C2D9B8',cd:'#7BAF73'}
+];
+
+const milestones=[
+  {icon:'📋',label:'Roll over 401(k) to Schwab',when:'This week',key:'rollover'},
+  {icon:'🔄',label:'Set up Roth auto-transfer ($625/mo)',when:'This week',key:'autotransfer'},
+  {icon:'💰',label:'Set up Discover auto-transfer ($617/mo)',when:'This week',key:'discover'},
+  {icon:'🔍',label:'Check refinance rate at a credit union',when:'This week',key:'reficheck'},
+  {icon:'✅',label:'Verify first paycheck take-home',when:'Sep 2026',key:'verifypay'},
+  {icon:'🎉',label:'Advance paid off!',when:'~Spring 2027',key:'advancedone'},
+  {icon:'📅',label:'Deadline: 2026 Roth IRA contributions',when:'Apr 15, 2027',key:'rothdeadline'},
+  {icon:'☀️',label:'Last paycheck before summer',when:'Jun 2027',key:'lastcheck'},
+  {icon:'🚀',label:'Start Roth 457(b)',when:'Sep 2027',key:'start457'},
+  {icon:'🏥',label:'Enroll in Denton ISD insurance',when:'Age 26',key:'insurance'},
+  {icon:'🎊',label:'Car paid off — $507/mo unlocked!',when:'~Aug 2028',key:'carpaidoff'}
+];
+
+const contacts=[
+  {name:'Schwab',detail:'(800) 435-4000',note:'Roth IRA & 401k rollover',icon:'🏦'},
+  {name:"Teacher's Pension",detail:'(877) 281-6152',note:'457(b) setup (Year 2)',icon:'📞'},
+  {name:'Denton ISD Benefits',detail:'(940) 369-0028',note:'benefits@dentonisd.org',icon:'🏫'},
+  {name:'Higginbotham (HPS)',detail:'(833) 933-5656',note:'dentonisd@hps.higginbotham.com',icon:'📋'}
+];
+
+function render(){
+  const c=state.car;
+  const loan=calcLoan(c.balance,c.rate,c.payment);
+  const loan100=calcLoan(c.balance,c.rate,c.payment+100);
+  const paid=c.originalBalance-c.balance;
+  const extraTotal=c.extraPayments.reduce((s,p)=>s+p.amount,0);
+  const pd=new Date();pd.setMonth(pd.getMonth()+loan.months);
+
+  let html=`
+  <div class="header"><div class="flower">🌷</div><h1>Belle's Money Plan</h1><p>2026–2027 school year ✨</p></div>
+  <div class="tabs">
+    ${['overview','car','goals','milestones','contacts'].map(t=>{
+      const icons={overview:'✨',car:'🚗',goals:'🎯',milestones:'🗓️',contacts:'📱'};
+      const labels={overview:'Overview',car:'Car',goals:'Goals',milestones:'Milestones',contacts:'Contacts'};
+      return`<button class="tab ${state.tab===t?'active':''}" onclick="setTab('${t}')"><span class="icon">${icons[t]}</span>${labels[t]}</button>`;
+    }).join('')}
+  </div>`;
+
+  if(state.tab==='overview'){
+    html+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div class="stitle"><span class="si">💸</span><h2 style="color:#9B7BBF">Monthly Paycheck</h2></div><div style="font-size:28px;font-weight:800;color:#9B7BBF">$4,600</div></div>`;
+    budget.forEach(b=>{
+      const pct=b.amt/4600*100;
+      html+=`<div class="bitem"><div class="bicon" style="background:${b.color}33;color:${b.color}">${b.icon}</div><div class="binfo"><div class="brow"><span class="label">${b.label}</span><span class="amt" style="color:${b.color}">$${b.amt.toLocaleString()}</span></div><div class="minibar"><div class="fill" style="width:${pct}%;background:${b.color}"></div></div></div></div>`;
+    });
+    html+=`</div>`;
+    html+=`<div class="card alert-card" style="display:flex;align-items:center;gap:12px"><span style="font-size:28px">☀️</span><div><p class="title">July & August: No Paycheck</p><p class="sub">Your Discover summer fund covers these months. Target: $6,164 saved by June.</p></div></div>`;
+    html+=`<div class="card" style="border-color:#E4F0DE"><div class="stitle"><span class="si">🌱</span><h2 style="color:#7BAF73">Savings Snapshot</h2></div>`;
+    goals.forEach(g=>{
+      html+=`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>${g.icon} ${g.label}</span><span style="font-weight:700;color:${g.cd}">$${state.goals[g.key].toLocaleString()} / $${g.target.toLocaleString()}</span></div>${pbar(state.goals[g.key],g.target,g.c,g.cd)}</div>`;
+    });
+    html+=`<button class="link-btn" onclick="setTab('goals')">Update progress →</button></div>`;
+    html+=`<div class="card" style="border-color:#F0C4C8"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div class="stitle"><span class="si">🚗</span><h2 style="color:#D4919A">Car Loan</h2></div><span style="font-size:13px;font-weight:700;color:#D4919A">${loan.months} mo left</span></div>${pbar(paid,c.originalBalance,'#F0C4C8','#D4919A')}<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px;color:#7B6F8E"><span>$${c.balance.toLocaleString(undefined,{minimumFractionDigits:2})} remaining</span><button class="link-btn" style="margin:0" onclick="setTab('car')">Details →</button></div></div>`;
+  }
+
+  if(state.tab==='car'){
+    const fields=[
+      {label:'Vehicle',key:'vehicle',icon:'🚗',type:'text'},
+      {label:'Current Balance',key:'balance',icon:'💲',type:'money'},
+      {label:'Interest Rate (APR)',key:'rate',icon:'%',type:'pct'},
+      {label:'Monthly Payment',key:'payment',icon:'📅',type:'money'},
+      {label:'Maturity Date',key:'maturity',icon:'🗓️',type:'text'}
+    ];
+    html+=`<div class="card" style="border-color:#F0C4C8"><div class="stitle"><span class="si">🚗</span><h2 style="color:#D4919A">Vehicle Info</h2></div>`;
+    fields.forEach(f=>{
+      const v=c[f.key];
+      const display=f.type==='money'?'$'+Number(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):f.type==='pct'?v+'%':v;
+      if(state.editing===f.key){
+        html+=`<div class="field-row"><div class="field-icon" style="background:#F0C4C833;color:#D4919A">${f.icon}</div><div style="flex:1"><div class="field-label">${f.label}</div><div style="display:flex;gap:6px;align-items:center"><input class="edit-input" id="edit-${f.key}" value="${v}" style="flex:1;max-width:160px"><button class="btn" style="background:#D4919A;color:#fff;padding:5px 8px" onclick="saveCarField('${f.key}')">✓</button><button class="btn" style="background:#eee;color:#7B6F8E;padding:5px 8px" onclick="cancelEdit()">✕</button></div></div></div>`;
+      } else {
+        html+=`<div class="field-row"><div class="field-icon" style="background:#F0C4C833;color:#D4919A">${f.icon}</div><div style="flex:1"><div class="field-label">${f.label}</div><div style="display:flex;align-items:center;gap:6px"><span class="field-val">${display}</span><button class="edit-btn" onclick="startEdit('${f.key}')">✏️</button></div></div></div>`;
+      }
+    });
+    html+=`</div>`;
+
+    html+=`<div class="card" style="border-color:#FBE8EA"><div class="stitle"><span class="si">📊</span><h2 style="color:#D4919A">Payoff Progress</h2></div>${pbar(paid,c.originalBalance,'#F0C4C8','#D4919A',20)}<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:#7B6F8E"><span>$${paid.toLocaleString(undefined,{minimumFractionDigits:2})} paid</span><span>$${c.balance.toLocaleString(undefined,{minimumFractionDigits:2})} left</span></div>
+    <div class="stat-grid">
+      <div class="stat-box" style="background:#FBE8EA"><div class="stat-label">Months Left</div><div class="stat-num" style="color:#D4919A">${loan.months}</div></div>
+      <div class="stat-box" style="background:#FBE8EA"><div class="stat-label">Interest Left</div><div class="stat-num" style="color:#D4919A">$${loan.totalInterest.toLocaleString()}</div></div>
+      <div class="stat-box" style="background:#F0E6F6"><div class="stat-label">Payoff Date</div><div class="stat-sm" style="color:#9B7BBF">${pd.toLocaleDateString('en-US',{month:'short',year:'numeric'})}</div></div>
+      <div class="stat-box" style="background:#F0E6F6"><div class="stat-label">Extra Paid</div><div class="stat-sm" style="color:#9B7BBF">$${extraTotal.toLocaleString()}</div></div>
+    </div></div>`;
+
+    html+=`<div class="card whatif"><span style="font-size:20px">💡</span><div><strong style="color:#7BAF73">What if you paid $100 extra/mo?</strong><br>You'd pay off in <strong>${loan100.months} months</strong> instead of ${loan.months}, saving <strong>$${(loan.totalInterest-loan100.totalInterest).toLocaleString()}</strong> in interest.</div></div>`;
+
+    html+=`<div class="card" style="border-color:#F0E6F6"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div class="stitle" style="margin-bottom:0"><span class="si">📝</span><h2 style="color:#9B7BBF">Extra Payments</h2></div><button class="btn" style="background:#9B7BBF;color:#fff" onclick="toggleAddPay()">+ Add</button></div>`;
+    if(state.showAddPay){
+      const today=new Date().toISOString().slice(0,10);
+      html+=`<div class="add-form"><label>Date</label><input type="date" id="pay-date" value="${today}"><label>Amount ($)</label><input type="number" id="pay-amt" placeholder="100"><label>Note (optional)</label><input type="text" id="pay-note" placeholder="Globo shift money"><div class="form-btns"><button class="save-btn" onclick="addPayment()">Save Payment</button><button class="cancel-btn" onclick="toggleAddPay()">Cancel</button></div></div>`;
+    }
+    if(c.extraPayments.length===0){
+      html+=`<p class="hint">No extra payments yet. When you throw extra at the principal, log it here.</p>`;
+    } else {
+      [...c.extraPayments].reverse().forEach(p=>{
+        const d=new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        html+=`<div class="pay-entry"><div><div class="pay-amt">$${p.amount.toLocaleString()}</div><div class="pay-detail">${d}${p.note?' · '+p.note:''}</div></div><button class="pay-del" onclick="removePay(${p.id})">🗑️</button></div>`;
+      });
+    }
+    html+=`</div>`;
+
+    html+=`<div class="card" style="border-color:#FBE8EA"><div class="stitle"><span class="si">📅</span><h2 style="color:#D4919A">Next 6 Payments</h2></div><div class="amort-grid"><div class="amort-header"><span>#</span><span>Principal</span><span>Interest</span><span>Balance</span></div>`;
+    loan.schedule.slice(0,6).forEach(r=>{
+      html+=`<div class="amort-row"><span style="color:#A99BBF">${r.month}</span><span style="color:#7BAF73;font-weight:600">$${r.principal.toLocaleString()}</span><span style="color:#D4919A">$${r.interest.toLocaleString()}</span><span style="font-weight:600">$${r.balance.toLocaleString()}</span></div>`;
+    });
+    html+=`</div></div>`;
+  }
+
+  if(state.tab==='goals'){
+    goals.forEach(g=>{
+      const rem=Math.max(0,g.target-state.goals[g.key]);
+      html+=`<div class="card goal-card" style="border-color:${g.c}66"><div class="gicon">${g.icon}</div><h3 style="color:${g.cd}">${g.label}</h3><p class="gsub">Target: $${g.target.toLocaleString()} · ${g.monthly>0?'$'+g.monthly+'/mo':'from cushion & freelance'}</p>${pbar(state.goals[g.key],g.target,g.c,g.cd)}<div class="goal-row"><span style="color:#7B6F8E">$${rem.toLocaleString()} remaining</span>`;
+      if(state.editing===g.key){
+        html+=`<div style="display:flex;align-items:center;gap:6px"><span style="color:#7B6F8E">$</span><input class="edit-input" id="edit-goal" value="${state.goals[g.key]}"><button class="btn" style="background:${g.cd};color:#fff;padding:6px 10px" onclick="saveGoal('${g.key}')">✓</button><button class="btn" style="background:#eee;color:#7B6F8E;padding:6px 10px" onclick="cancelEdit()">✕</button></div>`;
+      } else {
+        html+=`<button class="btn" style="background:${g.c}44;color:${g.cd}" onclick="startEdit('${g.key}')">✏️ Update</button>`;
+      }
+      html+=`</div></div>`;
+    });
+    html+=`<div class="card" style="background:#F0E6F6;border-color:#F0E6F6"><p class="hint">✏️ Tap "Update" to enter your <strong>total saved so far</strong> for each goal. Progress saves automatically.</p></div>`;
+  }
+
+  if(state.tab==='milestones'){
+    html+=`<div class="stitle"><span class="si">🗓️</span><h2 style="color:#9B7BBF">Your Roadmap</h2></div>`;
+    milestones.forEach(m=>{
+      const done=state.milestones[m.key];
+      html+=`<button class="ms-btn ${done?'done':''}" onclick="toggleMs('${m.key}')"><div class="ms-check">${done?'✓':''}</div><div><div class="ms-label">${m.icon} ${m.label}</div><div class="ms-when">${m.when}</div></div></button>`;
+    });
+  }
+
+  if(state.tab==='contacts'){
+    html+=`<div class="stitle"><span class="si">📱</span><h2 style="color:#D4919A">Quick Contacts</h2></div>`;
+    contacts.forEach(c=>{
+      html+=`<div class="card" style="border-color:#FBE8EA"><div class="contact-row"><span class="ci">${c.icon}</span><div><div class="cn">${c.name}</div><div class="cd">${c.detail}</div><div class="cnote">${c.note}</div></div></div></div>`;
+    });
+    html+=`<div class="card" style="border-color:#E4F0DE"><div class="contact-row"><span class="ci">🌐</span><div><div class="cn">THEbenefitsHUB</div><div class="cd">mybenefitshub.com/dentonisd</div><div class="cnote">Benefits enrollment & retirement plan setup</div></div></div></div>`;
+  }
+
+  html+=`<div class="footer">🌷 You're doing amazing, Belle 🌷</div>`;
+  $('#app').innerHTML=html;
+}
+
+window.setTab=t=>{state.tab=t;state.editing=null;state.showAddPay=false;render()};
+window.startEdit=k=>{state.editing=k;render();const el=$('#edit-'+k)||$('#edit-goal');if(el)el.focus()};
+window.cancelEdit=()=>{state.editing=null;render()};
+window.saveCarField=k=>{const el=$('#edit-'+k);if(!el)return;const v=['balance','rate','payment'].includes(k)?parseFloat(el.value)||0:el.value;state.car[k]=v;LS.set('belle-car',state.car);state.editing=null;render()};
+window.saveGoal=k=>{const el=$('#edit-goal');if(!el)return;state.goals[k]=parseFloat(el.value)||0;LS.set('belle-goals',state.goals);state.editing=null;render()};
+window.toggleMs=k=>{state.milestones[k]=!state.milestones[k];LS.set('belle-milestones',state.milestones);render()};
+window.toggleAddPay=()=>{state.showAddPay=!state.showAddPay;render()};
+window.addPayment=()=>{
+  const amt=parseFloat($('#pay-amt')?.value)||0;if(amt<=0)return;
+  const date=$('#pay-date')?.value||new Date().toISOString().slice(0,10);
+  const note=$('#pay-note')?.value||'';
+  state.car.balance=Math.max(0,state.car.balance-amt);
+  state.car.extraPayments.push({id:Date.now(),date,amount:amt,note});
+  LS.set('belle-car',state.car);state.showAddPay=false;render();
+};
+window.removePay=id=>{
+  const p=state.car.extraPayments.find(x=>x.id===id);if(!p)return;
+  state.car.balance+=p.amount;
+  state.car.extraPayments=state.car.extraPayments.filter(x=>x.id!==id);
+  LS.set('belle-car',state.car);render();
+};
+
+render();
+</script>
+</body>
+</html>
